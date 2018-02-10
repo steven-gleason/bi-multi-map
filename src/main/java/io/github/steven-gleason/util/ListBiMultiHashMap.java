@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class BiMultiHashMap<K,V> implements BiMultiMapList<K,V>
+public class ListBiMultiHashMap<K,V> implements ListBiMultiMap<K,V>
 {
 	private Map<K,List<V>> keyValMap;
 	private Map<V,List<K>> valKeyMap;
 
-	public BiMultiHashMap()
+	public ListBiMultiHashMap()
 	{
 		// TODO: implement generic class that takes a Map class parameter
 		keyValMap = new HashMap<>();
@@ -29,6 +29,12 @@ public class BiMultiHashMap<K,V> implements BiMultiMapList<K,V>
 	}
 
 	@Override
+	public Collection<V> get(K key)
+	{
+		return getVals(key);
+	}
+
+	@Override
 	public Collection<V> getVals(K key)
 	{
 		return keyValMap.get(key);
@@ -38,6 +44,12 @@ public class BiMultiHashMap<K,V> implements BiMultiMapList<K,V>
 	public Collection<K> getKeys(V val)
 	{
 		return valKeyMap.get(val);
+	}
+
+	@Override
+	public List<V> getList(K key)
+	{
+		return getValList(key);
 	}
 
 	@Override

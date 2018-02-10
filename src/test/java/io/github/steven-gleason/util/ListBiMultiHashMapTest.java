@@ -8,13 +8,13 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-public class BiMultiHashMapTest
+public class ListBiMultiHashMapTest
 {
 
 	@Test
 	public void emptyBiMultiMap()
 	{
-		BiMultiHashMap<String, Integer> testSubject = new BiMultiHashMap<>();
+		ListBiMultiMap<String, Integer> testSubject = new ListBiMultiHashMap<>();
 		Collection<String> keys = testSubject.getKeys(5);
 		Collection<Integer> vals = testSubject.getVals("word");
 
@@ -25,7 +25,7 @@ public class BiMultiHashMapTest
 	@Test
 	public void fullBiMultiMap()
 	{
-		BiMultiHashMap<String, String> testSubject = new BiMultiHashMap<>();
+		ListBiMultiHashMap<String, String> testSubject = new ListBiMultiHashMap<>();
 		testSubject.add("One", "1");
 		testSubject.add("Uno", "1");
 		testSubject.add("Two", "2");
