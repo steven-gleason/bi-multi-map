@@ -1,35 +1,37 @@
 package io.github.steven_gleason.util;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
 import org.junit.Test;
 
-public class ListBiMultiHashMapTest
+public class BiListValuedHashMapTest
 {
 
 	@Test
 	public void emptyBiMultiMap()
 	{
-		ListBiMultiMap<String, Integer> testSubject = new ListBiMultiHashMap<>();
+		BiListValuedMap<String, Integer> testSubject = new BiListValuedHashMap<>();
 		Collection<String> keys = testSubject.getKeys(5);
 		Collection<Integer> vals = testSubject.getVals("word");
 
-		assertNull(keys);
-		assertNull(vals);
+		assertNotNull(keys);
+		assertNotNull(vals);
+		assertTrue(keys.isEmpty());
+		assertTrue(vals.isEmpty());
 	}
 
 	@Test
 	public void fullBiMultiMap()
 	{
-		ListBiMultiHashMap<String, String> testSubject = new ListBiMultiHashMap<>();
-		testSubject.add("One", "1");
-		testSubject.add("Uno", "1");
-		testSubject.add("Two", "2");
-		testSubject.add("Two", "II");
+		BiListValuedMap<String, String> testSubject = new BiListValuedHashMap<>();
+		testSubject.put("One", "1");
+		testSubject.put("Uno", "1");
+		testSubject.put("Two", "2");
+		testSubject.put("Two", "II");
 
 		Collection<String> oneVals = testSubject.getVals("One");
 		Collection<String> unoVals = testSubject.getVals("Uno");
