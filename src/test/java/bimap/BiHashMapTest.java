@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.junit.Test;
 
@@ -14,9 +14,9 @@ public class BiHashMapTest
 	@Test
 	public void emptyBiMap()
 	{
-		BiMap<String, Integer> testSubject = new BiHashMap<>();
-		List<String> keys = testSubject.getKeys(5);
-		List<Integer> vals = testSubject.getVals("word");
+		BiHashMap<String, Integer> testSubject = new BiHashMap<>();
+		Collection<String> keys = testSubject.getKeys(5);
+		Collection<Integer> vals = testSubject.getVals("word");
 
 		assertNull(keys);
 		assertNull(vals);
@@ -25,19 +25,19 @@ public class BiHashMapTest
 	@Test
 	public void fullBiMap()
 	{
-		BiMap<String, String> testSubject = new BiHashMap<>();
+		BiHashMap<String, String> testSubject = new BiHashMap<>();
 		testSubject.add("One", "1");
 		testSubject.add("Uno", "1");
 		testSubject.add("Two", "2");
 		testSubject.add("Two", "II");
 
-		List<String> oneVals = testSubject.getVals("One");
-		List<String> unoVals = testSubject.getVals("Uno");
-		List<String> twoVals = testSubject.getVals("Two");
+		Collection<String> oneVals = testSubject.getVals("One");
+		Collection<String> unoVals = testSubject.getVals("Uno");
+		Collection<String> twoVals = testSubject.getVals("Two");
 
-		List<String> keys1 = testSubject.getKeys("1");
-		List<String> keys2 = testSubject.getKeys("2");
-		List<String> keysII = testSubject.getKeys("II");
+		Collection<String> keys1 = testSubject.getKeys("1");
+		Collection<String> keys2 = testSubject.getKeys("2");
+		Collection<String> keysII = testSubject.getKeys("II");
 
 		assertEquals(1, oneVals.size());
 		assertTrue(oneVals.contains("1"));

@@ -1,13 +1,11 @@
 package bimap;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 public interface BiMap<K,V>
 {
 	public void add(K key, V val);
-	public Map<K,List<V>> getKeyMap();
-	public Map<V,List<K>> getValMap();
-	public List<V> getVals(K key);
-	public List<K> getKeys(V val);
+	public Collection<V> getVals(K key);
+	public Collection<K> getKeys(V val);
 }

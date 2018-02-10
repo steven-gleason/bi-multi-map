@@ -1,13 +1,13 @@
 package bimap;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class BiHashMap<K,V> implements BiMap<K,V>
+public class BiHashMap<K,V> implements BiMapList<K,V>
 {
-	// TODO: use Collection, specific implementations choose type
 	private Map<K,List<V>> keyValMap;
 	private Map<V,List<K>> valKeyMap;
 
@@ -29,25 +29,25 @@ public class BiHashMap<K,V> implements BiMap<K,V>
 	}
 
 	@Override
-	public Map<K,List<V>> getKeyMap()
-	{
-		return keyValMap;
-	}
-
-	@Override
-	public Map<V,List<K>> getValMap()
-	{
-		return valKeyMap;
-	}
-
-	@Override
-	public List<V> getVals(K key)
+	public Collection<V> getVals(K key)
 	{
 		return keyValMap.get(key);
 	}
 
 	@Override
-	public List<K> getKeys(V val)
+	public Collection<K> getKeys(V val)
+	{
+		return valKeyMap.get(val);
+	}
+
+	@Override
+	public List<V> getValList(K key)
+	{
+		return keyValMap.get(key);
+	}
+
+	@Override
+	public List<K> getKeyList(V val)
 	{
 		return valKeyMap.get(val);
 	}
@@ -58,7 +58,7 @@ public class BiHashMap<K,V> implements BiMap<K,V>
 
 		if (vals == null)
 		{
-			vals = new ArrayList<>();
+			vals = new LinkedList<>();
 			keyValMap.put(key, vals);
 		}
 
@@ -71,7 +71,7 @@ public class BiHashMap<K,V> implements BiMap<K,V>
 
 		if (keys == null)
 		{
-			keys = new ArrayList<>();
+			keys = new LinkedList<>();
 			valKeyMap.put(val, keys);
 		}
 
