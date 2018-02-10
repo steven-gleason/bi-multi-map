@@ -1,4 +1,4 @@
-package bimap;
+package io.github.steven_gleason.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -8,13 +8,13 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-public class BiHashMapTest
+public class BiMultiHashMapTest
 {
 
 	@Test
-	public void emptyBiMap()
+	public void emptyBiMultiMap()
 	{
-		BiHashMap<String, Integer> testSubject = new BiHashMap<>();
+		BiMultiHashMap<String, Integer> testSubject = new BiMultiHashMap<>();
 		Collection<String> keys = testSubject.getKeys(5);
 		Collection<Integer> vals = testSubject.getVals("word");
 
@@ -23,9 +23,9 @@ public class BiHashMapTest
 	}
 
 	@Test
-	public void fullBiMap()
+	public void fullBiMultiMap()
 	{
-		BiHashMap<String, String> testSubject = new BiHashMap<>();
+		BiMultiHashMap<String, String> testSubject = new BiMultiHashMap<>();
 		testSubject.add("One", "1");
 		testSubject.add("Uno", "1");
 		testSubject.add("Two", "2");

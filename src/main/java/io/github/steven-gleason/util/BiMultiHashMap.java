@@ -1,4 +1,4 @@
-package bimap;
+package io.github.steven_gleason.util;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class BiHashMap<K,V> implements BiMapList<K,V>
+public class BiMultiHashMap<K,V> implements BiMultiMapList<K,V>
 {
 	private Map<K,List<V>> keyValMap;
 	private Map<V,List<K>> valKeyMap;
 
-	public BiHashMap()
+	public BiMultiHashMap()
 	{
 		// TODO: implement generic class that takes a Map class parameter
 		keyValMap = new HashMap<>();

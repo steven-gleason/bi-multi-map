@@ -1,7 +1,7 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>bimap</groupId>
-	<artifactId>bimap</artifactId>
+	<groupId>io.github.steven-gleason.util</groupId>
+	<artifactId>bi-multi-map</artifactId>
 	<version>0</version>
 
 	<build>
