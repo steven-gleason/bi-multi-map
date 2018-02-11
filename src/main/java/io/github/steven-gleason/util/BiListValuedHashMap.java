@@ -2,33 +2,31 @@ package io.github.steven_gleason.util;
 
 import java.util.AbstractMap;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.iterators.EntrySetMapIterator;
-import org.apache.commons.collections4.multiset.HashMultiSet;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
 public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 {
-	private Map<K,List<V>> keyValMap;
-	private Map<V,List<K>> valKeyMap;
+	private ListValuedMap<K,V> keyValMap;
+	private ListValuedMap<V,K> valKeyMap;
 
 	public BiListValuedHashMap()
 	{
-		keyValMap = new HashMap<>();
-		valKeyMap = new HashMap<>();
+		keyValMap = new ArrayListValuedHashMap<>();
+		valKeyMap = new ArrayListValuedHashMap<>();
 	}
 
 	@Override
 	public Map<K,Collection<V>> asMap()
 	{
-		return new HashMap<K,Collection<V>>(keyValMap);
+		return keyValMap.asMap();
 	}
 
 	@Override
@@ -47,7 +45,7 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public boolean containsMapping(Object key, Object val)
 	{
-		return keyValMap.get(key).contains(val);
+		return keyValMap.containsMapping(key, val);
 	}
 
 	@Override
@@ -59,15 +57,7 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public Collection<Map.Entry<K,V>>  entries()
 	{
-		Collection<Map.Entry<K,V>> allEntries = new LinkedList<>();
-		for (Map.Entry<K,List<V>> listEntry : keyValMap.entrySet())
-		{
-			for (V val : listEntry.getValue())
-			{
-				allEntries.add(new AbstractMap.SimpleEntry(listEntry.getKey(), val));
-			}
-		}
-		return allEntries;
+		return keyValMap.entries();
 	}
 
 	@Override
@@ -85,12 +75,7 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public MultiSet<K> keys()
 	{
-		MultiSet keySet = new HashMultiSet();
-		for (Map.Entry<K,List<V>> entry : keyValMap.entrySet())
-		{
-			keySet.add(entry.getKey(), entry.getValue().size());
-		}
-		return keySet;
+		return keyValMap.keys();
 	}
 
 	@Override
@@ -102,17 +87,14 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public MapIterator<K,V> mapIterator()
 	{
-		return new EntrySetMapIterator(keyValMap);
+		return keyValMap.mapIterator();
 	}
 
 	@Override
 	public boolean put(K key, V val)
 	{
-		List<V> vals = getVals(key);
-		List<K> keys = getKeys(val);
-
-		vals.add(val);
-		keys.add(key);
+		keyValMap.put(key, val);
+		valKeyMap.put(val, key);
 
 		return true; // Lists always grow
 	}
@@ -120,14 +102,12 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public boolean putAll(K key, Iterable<? extends V> values)
 	{
-		List<V> vals = getVals(key);
-		int previousSize = vals.size();
 		boolean changed = values.iterator().hasNext();
 
+		keyValMap.putAll(key, values);
 		for (V val : values)
 		{
-			vals.add(val);
-			getKeys(val).add(key);
+			valKeyMap.put(val, key);
 		}
 
 		return changed;
@@ -163,10 +143,6 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	public List<V> remove(Object key)
 	{
 		List<V> removedVals = keyValMap.remove(key);
-		if (removedVals == null)
-		{
-			removedVals = new LinkedList<>();
-		}
 
 		for (V val : removedVals)
 		{
@@ -179,8 +155,8 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public boolean removeMapping(Object key, Object val)
 	{
-		keyValMap.get(key).remove(val);
-		return valKeyMap.get(val).remove(key);
+		keyValMap.removeMapping(key, val);
+		return valKeyMap.removeMapping(val, key);
 	}
 
 	@Override
@@ -192,34 +168,18 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	@Override
 	public Collection<V> values()
 	{
-		return valKeyMap.keySet();
+		return keyValMap.values();
 	}
 
 	@Override
 	public List<V> getVals(K key)
 	{
-		List<V> vals = keyValMap.get(key);
-
-		if (vals == null)
-		{
-			vals = new LinkedList<>();
-			keyValMap.put(key, vals);
-		}
-
-		return vals;
+		return keyValMap.get(key);
 	}
 
 	@Override
 	public List<K> getKeys(V val)
 	{
-		List<K> keys = valKeyMap.get(val);
-
-		if (keys == null)
-		{
-			keys = new LinkedList<>();
-			valKeyMap.put(val, keys);
-		}
-
-		return keys;
+		return valKeyMap.get(val);
 	}
 }
