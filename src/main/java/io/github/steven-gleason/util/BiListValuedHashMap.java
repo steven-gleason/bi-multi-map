@@ -222,16 +222,4 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 
 		return keys;
 	}
-
-	@Override
-	public List<V> getValList(K key)
-	{
-		return keyValMap.get(key);
-	}
-
-	@Override
-	public List<K> getKeyList(V val)
-	{
-		return valKeyMap.get(val);
-	}
 }
