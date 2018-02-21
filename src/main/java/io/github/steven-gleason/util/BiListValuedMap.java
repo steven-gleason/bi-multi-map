@@ -17,4 +17,7 @@ public interface BiListValuedMap<K,V> extends BiMultiMap<K,V>, ListValuedMap<K,V
 	 */
 	@Override
 	public List<K> getKeys(V val);
+
+	@Override
+	public BiListValuedMap<V,K> inverse();
 }

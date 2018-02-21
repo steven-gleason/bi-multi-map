@@ -15,4 +15,9 @@ public interface BiMultiMap<K,V> extends MultiValuedMap<K,V>
 	 * Reversing the relationship of an ordinary MultiValuedMap, use a Value to get a Collection of Keys.
 	 */
 	public Collection<K> getKeys(V val);
+
+	/**
+	 * Get a mapping of Values to Keys
+	 */
+	public BiMultiMap<V,K> inverse();
 }

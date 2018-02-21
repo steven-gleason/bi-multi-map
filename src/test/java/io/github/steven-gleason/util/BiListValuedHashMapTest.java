@@ -57,4 +57,39 @@ public class BiListValuedHashMapTest
 		assertEquals(1, keysII.size());
 		assertTrue(keysII.contains("Two"));
 	}
+
+	@Test
+	public void inverseFullBiMultiMap()
+	{
+		BiListValuedMap<String, Integer> testSubject = new BiListValuedHashMap<>();
+		testSubject.put("One", 1);
+		testSubject.put("Uno", 1);
+		testSubject.put("Two", 2);
+		testSubject.put("Two", 10);
+		BiListValuedMap<Integer, String> inverted = testSubject.inverse();
+
+		Collection<Integer> oneKeys = inverted.getKeys("One");
+		Collection<Integer> unoKeys = inverted.getKeys("Uno");
+		Collection<Integer> twoKeys = inverted.getKeys("Two");
+
+		Collection<String> vals1 = inverted.getVals(1);
+		Collection<String> vals2 = inverted.getVals(2);
+		Collection<String> vals10 = inverted.getVals(10);
+
+		assertEquals(1, oneKeys.size());
+		assertTrue(oneKeys.contains(1));
+		assertEquals(1, unoKeys.size());
+		assertTrue(unoKeys.contains(1));
+		assertEquals(2, twoKeys.size());
+		assertTrue(twoKeys.contains(2));
+		assertTrue(twoKeys.contains(10));
+
+		assertEquals(2, vals1.size());
+		assertTrue(vals1.contains("One"));
+		assertTrue(vals1.contains("Uno"));
+		assertEquals(1, vals2.size());
+		assertTrue(vals2.contains("Two"));
+		assertEquals(1, vals10.size());
+		assertTrue(vals10.contains("Two"));
+	}
 }

@@ -17,4 +17,7 @@ public interface BiSetValuedMap<K,V> extends BiMultiMap<K,V>, SetValuedMap<K,V>
 	 */
 	@Override
 	public Set<K> getKeys(V val);
+
+	@Override
+	public BiSetValuedMap<V,K> inverse();
 }

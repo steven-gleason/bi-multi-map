@@ -182,4 +182,13 @@ public class BiListValuedHashMap<K,V> implements BiListValuedMap<K,V>
 	{
 		return valKeyMap.get(val);
 	}
+
+	@Override
+	public BiListValuedHashMap<V,K> inverse()
+	{
+		BiListValuedHashMap<V,K> newMap = new BiListValuedHashMap<>();
+		newMap.keyValMap = valKeyMap;
+		newMap.valKeyMap = keyValMap;
+		return newMap;
+	}
 }
